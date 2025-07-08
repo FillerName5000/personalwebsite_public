@@ -1,0 +1,41 @@
+name: personal_website
+description: "Mine"
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  cupertino_icons: ^1.0.8
+  flutter:
+    sdk: flutter
+  go_router: ^15.1.1
+  http: ^1.4.0
+  intl: ^0.20.2
+  provider: ^6.1.5
+  shared_preferences: ^2.5.3
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: W95font
+      fonts:
+        - asset: fonts/W95font.otf
+        - asset: fonts/W95font-Bold.otf
+    - family: Courier
+      fonts:
+      - asset: fonts/COUR.ttf
+      - asset: fonts/COURBD.ttf
+        weight: 700
+
+  assets:
+    - assets/icons/
+    - assets/big_icons/
