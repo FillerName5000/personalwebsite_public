@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:personal_website/routing/pw_router.dart';
 
 class WindowButtons extends StatelessWidget {
   const WindowButtons({super.key});
@@ -14,19 +16,14 @@ class WindowButtons extends StatelessWidget {
             semanticLabel: 'Minimize Button',
             width: 24,
           ),
-          onPressed: () {},
+          onPressed: () => context.go(routeEmpty),
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
         ),
-        IconButton(
-          icon: const Image(
-            image: AssetImage('assets/icons/fullscreen_button.png'),
-            semanticLabel: 'Fullscreen Button',
-            width: 24,
-          ),
-          onPressed: () {},
-          padding: EdgeInsets.zero,
-          constraints: const BoxConstraints(),
+        const Image(
+          image: AssetImage('assets/icons/fullscreen_button.png'),
+          semanticLabel: 'Fullscreen Button',
+          width: 24,
         ),
         const SizedBox(width: 3),
         IconButton(
@@ -35,7 +32,7 @@ class WindowButtons extends StatelessWidget {
             semanticLabel: 'Close Button',
             width: 24,
           ),
-          onPressed: () {},
+          onPressed: () => context.go(routeEmpty),
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
         ),

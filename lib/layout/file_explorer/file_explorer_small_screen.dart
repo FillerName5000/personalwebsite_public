@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:personal_website/layout/file_explorer/components/file_button_grid_small_screen.dart';
+import 'package:personal_website/layout/file_explorer/components/file_explorer_small_primary_top_bar.dart';
 import 'package:personal_website/layout/file_explorer/components/file_explorer_window_border.dart';
 import 'package:personal_website/layout/generic/generic_window/window_border_painter.dart';
+import 'package:personal_website/providers/api_url_provider.dart';
 import 'package:personal_website/providers/blogpost_provider.dart';
 import 'package:personal_website/providers/selected_file_button_provider.dart';
 import 'package:provider/provider.dart';
@@ -25,22 +27,30 @@ class FileExplorerContentSmallScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: <Widget>[
-      Consumer<BlogpostProvider>(
+      const FileExplorerSmallPrimaryTopBar(),
+      Consumer<ApiTypeProvider>(
         builder:
-            (BuildContext context, BlogpostProvider blogpostProvider, _) =>
-                Consumer<SelectedFileButtonProvider>(
+            (BuildContext context, ApiTypeProvider apiTypeProvider, _) =>
+                Consumer<BlogpostProvider>(
                   builder:
                       (
                         BuildContext context,
-                        SelectedFileButtonProvider fontProvider,
+                        BlogpostProvider blogpostProvider,
                         _,
-                      ) => const Expanded(
-                        child: FileExplorerWindowBorder(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 30),
-                            child: FileButtonGridSmallScreen(),
-                          ),
-                        ),
+                      ) => Consumer<SelectedFileButtonProvider>(
+                        builder:
+                            (
+                              BuildContext context,
+                              SelectedFileButtonProvider fontProvider,
+                              _,
+                            ) => const Expanded(
+                              child: FileExplorerWindowBorder(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 30),
+                                  child: FileButtonGridSmallScreen(),
+                                ),
+                              ),
+                            ),
                       ),
                 ),
       ),

@@ -6,6 +6,7 @@ class Blogpost {
     required this.postDate,
   });
 
+  /// Throws [FormatException] for invalid JSON.
   factory Blogpost.fromJson(Map<String, dynamic> json) => switch (json) {
     {
       'id': final int id,

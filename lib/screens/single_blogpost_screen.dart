@@ -6,9 +6,9 @@ import 'package:personal_website/layout/taskbar/taskbar_small_screen.dart';
 import 'package:personal_website/screens/components/crt_container.dart';
 
 class SingleBlogpostScreen extends StatelessWidget {
-  const SingleBlogpostScreen({super.key, required this.id});
+  const SingleBlogpostScreen({super.key, required this.title});
 
-  final int id;
+  final String title;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
@@ -17,7 +17,7 @@ class SingleBlogpostScreen extends StatelessWidget {
         return CrtContainer(
           child: Column(
             children: <Widget>[
-              Expanded(child: Center(child: SingleBlogpostFullScreen(id: id))),
+              Expanded(child: Center(child: SingleBlogpostFullScreen(title: title))),
               const TaskbarFullScreen(),
             ],
           ),
@@ -25,7 +25,7 @@ class SingleBlogpostScreen extends StatelessWidget {
       } else {
         return Scaffold(body: Column(
           children: <Widget>[
-            Expanded(child: SingleBlogpostSmallScreen(id: id)),
+            Expanded(child: SingleBlogpostSmallScreen(title: title)),
             const TaskbarSmallScreen(),
           ],
         ));

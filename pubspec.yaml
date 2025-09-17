@@ -1,8 +1,8 @@
 name: personal_website
-description: "Mine"
+description: "Personal website for Briek Goethals"
 publish_to: "none"
 
-version: 1.0.0+1
+version: 2.0.0
 
 environment:
   sdk: ^3.7.2

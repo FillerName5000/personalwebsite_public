@@ -27,7 +27,7 @@ class _AddBlogpostScreenState extends State<AddBlogpostScreen> {
 
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
-      await Provider.of<BlogpostProvider>(context, listen: false).addBlogpost(
+      await Provider.of<BlogpostProvider>(context, listen: false).addBlogpost(context, 
         BlogpostAdd(
           title: _titleController.text,
           content: _contentController.text,
@@ -55,7 +55,7 @@ class _AddBlogpostScreenState extends State<AddBlogpostScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: const Text('Not like this works without admin perms'),
-    ), //TODO return unauthorized for everything
+    ), 
     body: Padding(
       padding: const EdgeInsets.all(16),
       child: Form(
@@ -72,7 +72,7 @@ class _AddBlogpostScreenState extends State<AddBlogpostScreen> {
             TextFormField(
               controller: _contentController,
               decoration: const InputDecoration(labelText: 'Content'),
-              maxLines: 5,
+              maxLines: 20,
               validator:
                   (String? value) =>
                       value == null || value.isEmpty ? 'Enter content' : null,

@@ -6,6 +6,7 @@ class BlogpostAdd {
     required this.credential,
   });
 
+  /// Throws [FormatException] for invalid JSON.
   factory BlogpostAdd.fromJson(Map<String, dynamic> json) => switch (json) {
     {
       'title': final String title,

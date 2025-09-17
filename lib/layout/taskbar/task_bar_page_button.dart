@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:personal_website/extensions/string_extensions.dart';
 import 'package:personal_website/layout/generic/generic_buttons/non_depressed_button.dart';
 
 const double taskBarNavButtonWidth = 160;
@@ -16,7 +17,8 @@ class TaskBarNavButton extends StatelessWidget {
     child: SizedBox(
       width: taskBarNavButtonWidth,
       child: NonDepressedButton(
-        onPressed: () => GoRouter.of(context).go('/blogpost/$id'),
+        onPressed:
+            () => GoRouter.of(context).go('/blogpost/$title'.urlEncoded()),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Row(

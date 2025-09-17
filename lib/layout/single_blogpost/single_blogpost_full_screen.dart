@@ -6,22 +6,22 @@ import 'package:personal_website/layout/generic/generic_window/window_border_pai
 import 'package:personal_website/layout/single_blogpost/components/single_blogpost_text.dart';
 
 class SingleBlogpostFullScreen extends StatelessWidget {
-  const SingleBlogpostFullScreen({super.key, required this.id});
-  final int id;
+  const SingleBlogpostFullScreen({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) => CustomPaint(
     painter: WindowBorderPainter(),
     child: Padding(
       padding: const EdgeInsets.all(6),
-      child: SingleBlogpostContentFullScreen(id: id),
+      child: SingleBlogpostContentFullScreen(title: title),
     ),
   );
 }
 
 class SingleBlogpostContentFullScreen extends StatelessWidget {
-  const SingleBlogpostContentFullScreen({super.key, required this.id});
-  final int id;
+  const SingleBlogpostContentFullScreen({super.key, required this.title});
+  final String title;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -30,7 +30,7 @@ class SingleBlogpostContentFullScreen extends StatelessWidget {
       const GenericSecondaryTopBar(),
       Expanded(
         child: FileExplorerWindowBorder(
-          child: SingleBlogpostText(id: id),
+          child: SingleBlogpostText(title: title),
         ),
       ),
     ],

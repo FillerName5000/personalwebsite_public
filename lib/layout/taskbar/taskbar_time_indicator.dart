@@ -39,6 +39,15 @@ class _TaskBarTimeIndicatorState extends State<TaskBarTimeIndicator> {
               filterQuality: FilterQuality.none,
             ),
             const SizedBox(width: 8),
+            const Image(
+              image: AssetImage('assets/icons/java_logo.png'),
+              semanticLabel: 'Java logo',
+              width: 20,
+              height: 20,
+              fit: BoxFit.contain,
+              filterQuality: FilterQuality.none,
+            ),
+            const SizedBox(width: 8),
             Consumer<SecondLoopingProvider>(
               builder:
                   (BuildContext context, SecondLoopingProvider provider, _) =>

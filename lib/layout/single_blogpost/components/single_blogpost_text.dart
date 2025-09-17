@@ -5,16 +5,21 @@ import 'package:personal_website/providers/blogpost_provider.dart';
 import 'package:provider/provider.dart';
 
 class SingleBlogpostText extends StatefulWidget {
-  const SingleBlogpostText({super.key, required this.id});
-  final int id;
+  const SingleBlogpostText({super.key, required this.title});
+  final String title;
 
   @override
   State<SingleBlogpostText> createState() => _SingleBlogpostTextState();
 }
 
 class _SingleBlogpostTextState extends State<SingleBlogpostText> {
-  Future<Blogpost> _blogpostFuture = Future<Blogpost>.value(
-    Blogpost(id: 0, title: 'Loading...', content: 'Loading blogpost text...', postDate: DateTime.now()),
+  Future<Blogpost?> _blogpostFuture = Future<Blogpost?>.value(
+    Blogpost(
+      id: 0,
+      title: 'Loading...',
+      content: 'Loading blogpost text...',
+      postDate: DateTime.now(),
+    ),
   );
 
   @override
@@ -22,34 +27,43 @@ class _SingleBlogpostTextState extends State<SingleBlogpostText> {
     final BlogpostProvider blogpostProvider = Provider.of<BlogpostProvider>(
       context,
     );
-    _blogpostFuture = blogpostProvider.fetchBlogpostById(widget.id);
+    _blogpostFuture = blogpostProvider.fetchBlogpostByTitle(context, widget.title);
 
-    return FutureBuilder<Blogpost>(
+    return FutureBuilder<Blogpost?>(
       future: _blogpostFuture,
-      builder: (BuildContext context, AsyncSnapshot<Blogpost> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<Blogpost?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingText(additionalText: 'blog post'));
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          final String errorMessage =
+              Provider.of<BlogpostProvider>(
+                context,
+                listen: false,
+              ).errorMessage ??
+              'Something went wrong.';
+          return Center(child: Text('Error: $errorMessage'));
         } else if (!snapshot.hasData) {
-          return const Center(child: Text('Item not found'));
+          return Center(child: Text('Blogpost: "${widget.title}" not found'));
         } else {
           return Padding(
             padding: const EdgeInsets.all(6),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    snapshot.data!.title,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minWidth: double.infinity),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      snapshot.data!.title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(snapshot.data!.content),
-                ],
+                    const SizedBox(height: 10),
+                    Text(snapshot.data!.content),
+                  ],
+                ),
               ),
             ),
           );

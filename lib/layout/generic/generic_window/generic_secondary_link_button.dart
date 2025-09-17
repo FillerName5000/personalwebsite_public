@@ -20,34 +20,27 @@ class GenericSecondaryLinkButton extends StatefulWidget {
 
 class _GenericSecondaryLinkButtonState
     extends State<GenericSecondaryLinkButton> {
-  bool _isHovered = false;
   bool _hasBeenPressed = false;
 
   @override
-  Widget build(BuildContext context) => MouseRegion(
-    onEnter: (_) => setState(() => _isHovered = true),
-    onExit: (_) => setState(() => _isHovered = false),
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 4),
-      child: TextButton(
-        onPressed: () {
-          setState(() => _hasBeenPressed = true);
-          widget.onPressed();
-        },
-        style: ButtonStyle(
-          overlayColor: WidgetStateProperty.all(Colors.transparent),
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-        child: Text(
-          widget.text,
-          style: TextStyle(
-            fontSize: 16,
-            color: _hasBeenPressed
-                ? clickedLinkColor
-                : unclickedLinkColor,
-            decoration:
-                _isHovered ? TextDecoration.underline : TextDecoration.none,
-          ),
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 4),
+    child: TextButton(
+      onPressed: () {
+        setState(() => _hasBeenPressed = true);
+        widget.onPressed();
+      },
+      style: ButtonStyle(
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      child: Text(
+        widget.text,
+        style: TextStyle(
+          fontSize: 16,
+          color: _hasBeenPressed
+              ? clickedLinkColor
+              : unclickedLinkColor,
         ),
       ),
     ),

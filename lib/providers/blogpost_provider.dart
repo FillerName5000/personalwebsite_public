@@ -2,13 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:personal_website/data/models/blogposts/blogpost.dart';
 import 'package:personal_website/data/models/blogposts/blogpost_add.dart';
 import 'package:personal_website/data/models/blogposts/blogpost_no_content.dart';
+import 'package:personal_website/providers/api_url_provider.dart';
+import 'package:provider/provider.dart';
 
-const String baseUrl = "https://briekgoethalsdev.be";
-
+// Riverpod could've been a better option (have not tried yet), provider has been quite annoying and not that useful.
+// Research into how exactly it expects to handle state changes from fetches has been unsatisfying.
+// Even in a small app with little complexity it's taken too much time compared to other frameworks.
 class BlogpostProvider with ChangeNotifier {
   List<BlogpostNoContent>? _blogpostsNoContent;
   String? _errorMessage;
@@ -16,9 +20,9 @@ class BlogpostProvider with ChangeNotifier {
   List<BlogpostNoContent>? get blogpostsNoContent => _blogpostsNoContent;
   String? get errorMessage => _errorMessage;
 
-  bool hasError() => _errorMessage != null;
-
-  Future<List<BlogpostNoContent>> fetchBlogpostsNoContent() async {
+  Future<List<BlogpostNoContent>?> fetchBlogpostsNoContent(
+    BuildContext context,
+  ) async {
     _errorMessage = null;
 
     if (_blogpostsNoContent != null) {
@@ -29,8 +33,10 @@ class BlogpostProvider with ChangeNotifier {
     }
 
     try {
+      final String fullBaseUrl =
+          Provider.of<ApiTypeProvider>(context, listen: false).fullBaseUrl;
       final http.Response response = await http.get(
-        Uri.parse('$baseUrl/api/Blogposts'),
+        Uri.parse('$fullBaseUrl/blogposts/v2'),
       );
 
       if (response.statusCode == 200) {
@@ -40,41 +46,48 @@ class BlogpostProvider with ChangeNotifier {
         notifyListeners();
         return _blogpostsNoContent!;
       } else {
-        _errorMessage = 'Failed to fetch blog posts';
-        throw Exception('Error fetching blog posts: ${response.statusCode}');
+        _errorMessage = 'Could not find blog posts.';
+        return null;
       }
-    } on Exception catch (e) {
-      _errorMessage = 'Failed to fetch blog posts';
-      throw Exception('Exception in fetchBlogpostsNoContent: $e');
+    } on Exception {
+      _errorMessage = 'Could not find blog posts.';
+      return null;
     }
   }
 
-  Future<Blogpost> fetchBlogpostById(int id) async {
+  Future<Blogpost?> fetchBlogpostByTitle(
+    BuildContext context,
+    String title,
+  ) async {
     _errorMessage = null;
 
     try {
+      final String fullBaseUrl =
+          Provider.of<ApiTypeProvider>(context, listen: false).fullBaseUrl;
       final http.Response response = await http.get(
-        Uri.parse('$baseUrl/api/Blogposts/$id'),
+        Uri.parse('$fullBaseUrl/blogposts/v2/$title'),
       );
 
       if (response.statusCode == 200) {
         return Blogpost.fromJson(jsonDecode(response.body));
       } else {
-        _errorMessage = 'Failed to fetch blog post';
-        throw Exception('Error fetching blog post: ${response.statusCode}');
+        _errorMessage = 'Could not find blog post $title.';
+        return null;
       }
-    } on Exception catch (e) {
-      _errorMessage = 'Failed to fetch blog post';
-      throw Exception('Exception in fetchBlogpostById: $e');
+    } on Exception {
+      _errorMessage = 'Could not find blog post $title.';
+      return null;
     }
   }
 
-  Future<void> addBlogpost(BlogpostAdd blogpost) async {
+  Future<void> addBlogpost(BuildContext context, BlogpostAdd blogpost) async {
     _errorMessage = null;
 
     try {
+      final String fullBaseUrl =
+          Provider.of<ApiTypeProvider>(context, listen: false).fullBaseUrl;
       final http.Response response = await http.post(
-        Uri.parse('$baseUrl/api/Blogposts'),
+        Uri.parse('$fullBaseUrl/blogposts/v2'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -85,16 +98,16 @@ class BlogpostProvider with ChangeNotifier {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData.containsKey('title')) {
           if (kDebugMode) {
-            debugPrint('Added blog post with title: ${responseData['title']}');
+            debugPrint('Added blog post with title: ${responseData['title']}.');
           }
         }
       } else {
-        _errorMessage = 'Failed to add blog post';
+        _errorMessage = 'Failed to add blog post.';
       }
-    } on Exception catch (e) {
-      _errorMessage = 'Failed to add blog post';
+    } on Exception {
+      _errorMessage = 'Failed to add blog post.';
       if (kDebugMode) {
-        debugPrint('Exception in addBlogpost: $e');
+        debugPrint('Failed to add blog post.');
       }
     }
   }

@@ -4,6 +4,7 @@ import 'package:personal_website/layout/file_explorer/components/file_explorer_p
 import 'package:personal_website/layout/file_explorer/components/file_explorer_window_border.dart';
 import 'package:personal_website/layout/generic/generic_window/generic_secondary_top_bar.dart';
 import 'package:personal_website/layout/generic/generic_window/window_border_painter.dart';
+import 'package:personal_website/providers/api_url_provider.dart';
 import 'package:personal_website/providers/blogpost_provider.dart';
 import 'package:personal_website/providers/selected_file_button_provider.dart';
 import 'package:provider/provider.dart';
@@ -29,22 +30,29 @@ class FileExplorerContentFullScreen extends StatelessWidget {
     children: <Widget>[
       const FileExplorerPrimaryTopBar(),
       const GenericSecondaryTopBar(),
-      Consumer<BlogpostProvider>(
+      Consumer<ApiTypeProvider>(
         builder:
-            (BuildContext context, BlogpostProvider blogpostProvider, _) =>
-                Consumer<SelectedFileButtonProvider>(
+            (BuildContext context, ApiTypeProvider apiTypeProvider, _) =>
+                Consumer<BlogpostProvider>(
                   builder:
                       (
                         BuildContext context,
-                        SelectedFileButtonProvider fontProvider,
+                        BlogpostProvider blogpostProvider,
                         _,
-                      ) => const Expanded(
-                        child: FileExplorerWindowBorder(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 30),
-                            child: FileButtonGridFullScreen(),
-                          ),
-                        ),
+                      ) => Consumer<SelectedFileButtonProvider>(
+                        builder:
+                            (
+                              BuildContext context,
+                              SelectedFileButtonProvider fontProvider,
+                              _,
+                            ) => const Expanded(
+                              child: FileExplorerWindowBorder(
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 30),
+                                  child: FileButtonGridFullScreen(),
+                                ),
+                              ),
+                            ),
                       ),
                 ),
       ),

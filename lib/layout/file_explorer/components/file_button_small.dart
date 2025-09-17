@@ -35,8 +35,8 @@ class _FileButtonSmallState extends State<FileButtonSmall> {
         ).selectedFileButtonIndex;
     isSelected = selectedButtonIndex == widget.id;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
           isSelected
@@ -46,37 +46,42 @@ class _FileButtonSmallState extends State<FileButtonSmall> {
                 listen: false,
               ).setSelectedFileButtonIndex(widget.id);
         },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ColoredBox(
-              color:
-                  isSelected ? selectedFileButtonColor : Colors.transparent,
-              child: Image.asset(
-                bigIconBasePath + widget.bigIconName,
-                width: 35,
-                height: 35,
-              ),
-            ), 
-            const SizedBox(height: 6),
-            Center(
-              child: ColoredBox(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ColoredBox(
                 color:
                     isSelected ? selectedFileButtonColor : Colors.transparent,
-                child: Text(
-                  widget.label,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontSize:
-                        (Theme.of(context).textTheme.bodySmall?.fontSize ?? 10) * 0.8,
-                    color: isSelected ? contrastTextColor : menuTextColor,
+                child: Image.asset(
+                  bigIconBasePath + widget.bigIconName,
+                  width: 35,
+                  height: 35,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Center(
+                child: ColoredBox(
+                  color:
+                      isSelected ? selectedFileButtonColor : Colors.transparent,
+                  child: Text(
+                    widget.label,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontSize:
+                          (Theme.of(context).textTheme.bodySmall?.fontSize ??
+                              10) *
+                          0.8,
+                      color: isSelected ? contrastTextColor : menuTextColor,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

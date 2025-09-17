@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:personal_website/constants/colors.dart';
+import 'package:personal_website/providers/api_url_provider.dart';
 import 'package:personal_website/providers/blogpost_provider.dart';
 import 'package:personal_website/providers/font_provider.dart';
 import 'package:personal_website/providers/second_looping_provider.dart';
@@ -11,6 +13,7 @@ import 'package:provider/single_child_widget.dart';
 //TODO add central reference point font size
 void main() {
   runApp(const PersonalWebsiteApp());
+  SemanticsBinding.instance.ensureSemantics();
 }
 
 class PersonalWebsiteApp extends StatelessWidget {
@@ -28,6 +31,9 @@ class PersonalWebsiteApp extends StatelessWidget {
       ChangeNotifierProvider<SelectedFileButtonProvider>(
         create: (BuildContext context) => SelectedFileButtonProvider(),
       ),
+      ChangeNotifierProvider<ApiTypeProvider>(
+        create: (BuildContext context) => ApiTypeProvider(),
+      ),
       ChangeNotifierProvider<BlogpostProvider>(
         create: (BuildContext context) => BlogpostProvider(),
       ),
@@ -36,6 +42,7 @@ class PersonalWebsiteApp extends StatelessWidget {
       builder:
           (BuildContext context, FontProvider fontProvider, _) =>
               MaterialApp.router(
+                title: "Briek Goethals' Portfolio",
                 routerConfig: router,
                 theme: ThemeData(
                   brightness: Brightness.light,
