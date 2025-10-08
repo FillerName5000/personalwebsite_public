@@ -4,7 +4,7 @@ import 'package:personal_website/constants/api_types.dart';
 const String baseUrl = "https://briekgoethalsdev.be";
 
 class ApiTypeProvider extends ChangeNotifier {
-  ApiType _apiType = ApiType.java;
+  ApiType _apiType = ApiType.dotnet;
 
   ApiType get apiType => _apiType;
 

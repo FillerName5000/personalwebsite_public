@@ -34,16 +34,8 @@ class _SingleBlogpostTextState extends State<SingleBlogpostText> {
       builder: (BuildContext context, AsyncSnapshot<Blogpost?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingText(additionalText: 'blog post'));
-        } else if (snapshot.hasError) {
-          final String errorMessage =
-              Provider.of<BlogpostProvider>(
-                context,
-                listen: false,
-              ).errorMessage ??
-              'Something went wrong.';
-          return Center(child: Text('Error: $errorMessage'));
-        } else if (!snapshot.hasData) {
-          return Center(child: Text('Blogpost: "${widget.title}" not found'));
+        } else if (!snapshot.hasData || snapshot.hasError) {
+          return Center(child: Text('"${widget.title}" could not be found.'));
         } else {
           return Padding(
             padding: const EdgeInsets.all(6),

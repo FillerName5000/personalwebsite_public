@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:personal_website/constants/colors.dart';
 import 'package:personal_website/data/models/blogposts/blogpost_no_content.dart';
 import 'package:personal_website/data/shared/file_button_list.dart';
 import 'package:personal_website/extensions/string_extensions.dart';
@@ -29,7 +30,9 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
       context,
       listen: false,
     );
-    blogpostsNoContentFuture = blogpostProvider.fetchBlogpostsNoContent(context);
+    blogpostsNoContentFuture = blogpostProvider.fetchBlogpostsNoContent(
+      context,
+    );
 
     return FutureBuilder<List<BlogpostNoContent>?>(
       future: blogpostsNoContentFuture,
@@ -39,31 +42,49 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
       ) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingText(additionalText: 'blog posts'));
-        } else if (snapshot.hasError) {
-          final String errorMessage =
-              Provider.of<BlogpostProvider>(
-                context,
-                listen: false,
-              ).errorMessage ??
-              'Something went wrong.';
-          return Center(child: Text('Error: $errorMessage'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (!snapshot.hasData ||
+            snapshot.data!.isEmpty ||
+            snapshot.hasError) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Something went wrong.'),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: 90,
+                const SizedBox(height: 8),
+                IntrinsicWidth(
                   child: NonDepressedButton(
+                    child: const Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Image(
+                              image: AssetImage('assets/icons/refresh.png'),
+                              semanticLabel: 'Refresh button',
+                              width: 26,
+                            ),
+                          ),
+                          Text(
+                            'Refresh',
+                            style: TextStyle(
+                              color: menuTextColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
                     onPressed: () {
                       setState(() {
-                        blogpostsNoContentFuture =
-                            blogpostProvider.fetchBlogpostsNoContent(context);
+                        blogpostsNoContentFuture = blogpostProvider
+                            .fetchBlogpostsNoContent(context);
                       });
                     },
-                    child: const Text('Refresh'),
                   ),
                 ),
               ],
@@ -88,7 +109,8 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
     final List<String> blogpostsWithoutContent =
         blogposts.map((BlogpostNoContent e) => e.title).toList();
     final int lastBaseListIndex =
-        baseFileButtonsSmall(context)[(baseFileButtonsSmall(context).length - 1)].id;
+        baseFileButtonsSmall(context)[(baseFileButtonsSmall(context).length -
+            1)].id;
 
     final List<FileButtonSmall> blogpostFileButtons =
         List<FileButtonSmall>.generate(
@@ -104,6 +126,9 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
           ),
         );
 
-    return <FileButtonSmall>[...baseFileButtonsSmall(context), ...blogpostFileButtons];
+    return <FileButtonSmall>[
+      ...baseFileButtonsSmall(context),
+      ...blogpostFileButtons,
+    ];
   }
 }

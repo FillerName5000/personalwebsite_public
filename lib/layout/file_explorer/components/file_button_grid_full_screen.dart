@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:personal_website/constants/colors.dart';
 import 'package:personal_website/data/models/blogposts/blogpost_no_content.dart';
 import 'package:personal_website/data/shared/file_button_list.dart';
 import 'package:personal_website/extensions/string_extensions.dart';
@@ -29,7 +30,9 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
       context,
       listen: false,
     );
-    blogpostsNoContentFuture = blogpostProvider.fetchBlogpostsNoContent(context);
+    blogpostsNoContentFuture = blogpostProvider.fetchBlogpostsNoContent(
+      context,
+    );
 
     return FutureBuilder<List<BlogpostNoContent>?>(
       future: blogpostsNoContentFuture,
@@ -39,31 +42,49 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
       ) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: LoadingText(additionalText: 'blog posts'));
-        } else if (snapshot.hasError) {
-          final String errorMessage =
-              Provider.of<BlogpostProvider>(
-                context,
-                listen: false,
-              ).errorMessage ??
-              'Something went wrong.';
-          return Center(child: Text('Error: $errorMessage'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        } else if (snapshot.hasError ||
+            !snapshot.hasData ||
+            snapshot.data!.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Something went wrong.'),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: 90,
+                IntrinsicWidth(
                   child: NonDepressedButton(
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Image(
+                              image: AssetImage('assets/icons/refresh.png'),
+                              semanticLabel: 'Refresh button',
+                              width: 26,
+                            ),
+                          ),
+                          Text(
+                            'Refresh',
+                            style: TextStyle(
+                              color: menuTextColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
                     onPressed: () {
                       setState(() {
-                        blogpostsNoContentFuture =
-                            blogpostProvider.fetchBlogpostsNoContent(context);
+                        blogpostsNoContentFuture = blogpostProvider
+                            .fetchBlogpostsNoContent(context);
                       });
                     },
-                    child: const Text('Refresh'),
                   ),
                 ),
               ],
@@ -71,7 +92,7 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
           );
         } else {
           final List<FileButton> fileButtons = getJoinedFileButtonLists(
-            context, 
+            context,
             snapshot.data!,
           );
           return GridView.extent(
@@ -83,7 +104,10 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
     );
   }
 
-  List<FileButton> getJoinedFileButtonLists(BuildContext context, List<BlogpostNoContent> blogposts) {
+  List<FileButton> getJoinedFileButtonLists(
+    BuildContext context,
+    List<BlogpostNoContent> blogposts,
+  ) {
     final List<String> blogpostsWithoutContent =
         blogposts.map((BlogpostNoContent e) => e.title).toList();
     final int lastBaseListIndex =

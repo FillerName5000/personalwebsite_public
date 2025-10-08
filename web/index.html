@@ -52,12 +52,14 @@
     </style>
   </head>
   <body>
-    <div id="loading">Loading...</div>
+    <div id="loading">Loading in Flutter assets.</div>
     <script>
-      window.addEventListener("load", function () {
-        var loadingDiv = document.getElementById("loading");
-        if (loadingDiv) loadingDiv.remove();
-      });
+      let dots = 1;
+      setInterval(() => {
+        dots = (dots % 10) + 1;
+        document.querySelector("div#loading").textContent =
+          "Loading in Flutter assets" + ".".repeat(dots);
+      }, 125);
     </script>
     <script src="flutter_bootstrap.js" async></script>
   </body>
