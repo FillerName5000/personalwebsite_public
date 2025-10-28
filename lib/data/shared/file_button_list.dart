@@ -20,17 +20,23 @@ List<Object> _fixedUrlFileButtonData = <Object>[
     "label": "Github Profile",
     "onPressedUrl": "https://github.com/FillerName5000",
   },
+  <String, Object>{
+    "id": 4,
+    "bigIconName": "advent_of_code_24.png",
+    "label": "Advent Of Code 24",
+    "onPressedUrl": "https://github.com/FillerName5000/AdventOfCode2024cpp",
+  },
 ];
 
 List<Object> _apiDependantFileButtonData = <Object>[
   <String, Object>{
-    "id": 4,
+    "id": 5,
     "bigIconName": "pdf_icon.png",
     "label": "CV (NL)",
     "onPressedUrl": "/files/cv-nl",
   },
   <String, Object>{
-    "id": 5,
+    "id": 6,
     "bigIconName": "pdf_icon.png",
     "label": "CV (EN)",
     "onPressedUrl": "/files/cv-en",
