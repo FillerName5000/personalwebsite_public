@@ -27,12 +27,44 @@ const Color crtBorderMediumColor = Color.fromARGB(255, 224, 210, 185);
 const Color crtBorderDarkColor = Color.fromARGB(255, 195, 189, 169);
 
 const Color selectedWindowTopBarColor = Color.fromARGB(255, 0, 0, 128);
-const Color windowDarkFirstExternalBorderColor = Color.fromARGB(255, 64, 64, 64);
-const Color windowDarkSecondExternalBorderColor = Color.fromARGB(255, 128, 128, 128);
-const Color windowLightFirstExternalBorderColor = Color.fromARGB(255, 223, 223, 223);
-const Color windowLightSecondExternalBorderColor = Color.fromARGB(255, 255, 255, 255);
+const Color windowDarkFirstExternalBorderColor = Color.fromARGB(
+  255,
+  64,
+  64,
+  64,
+);
+const Color windowDarkSecondExternalBorderColor = Color.fromARGB(
+  255,
+  128,
+  128,
+  128,
+);
+const Color windowLightFirstExternalBorderColor = Color.fromARGB(
+  255,
+  223,
+  223,
+  223,
+);
+const Color windowLightSecondExternalBorderColor = Color.fromARGB(
+  255,
+  255,
+  255,
+  255,
+);
 
 const Color unclickedLinkColor = Color.fromARGB(255, 0, 0, 255);
 const Color clickedLinkColor = Color.fromARGB(255, 0, 0, 128);
 
 const Color selectedFileButtonColor = Color.fromARGB(255, 9, 10, 120);
+
+const Color advOfCode2024BackgroundColor = Color.fromARGB(255, 15, 15, 35);
+const Color advOfCode2024TextColor = Color.fromARGB(255, 204, 204, 204);
+
+const Color advOfCode2024FullyCompleteColor = Color.fromARGB(
+  255,
+  255,
+  255,
+  102,
+);
+const Color advOfCode2024OnHoldColor = Color.fromARGB(255, 255, 165, 0);
+const Color advOfCode2024NotCompleteColor = Color.fromARGB(255, 120, 120, 120);

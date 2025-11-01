@@ -37,7 +37,7 @@ class TaskBarStartButton extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: () => GoRouter.of(context).go(routeHome),
+      onPressed: () async => GoRouter.of(context).go(routeHome), //override transitions
     ),
   );
 }

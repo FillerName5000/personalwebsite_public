@@ -34,6 +34,8 @@ class _FileButtonState extends State<FileButton> {
           listen: true,
         ).selectedFileButtonIndex;
     isSelected = selectedButtonIndex == widget.id;
+    final double? baseFontSize = Theme.of(context).textTheme.bodyMedium?.fontSize;
+    final double labelFontSize = baseFontSize != null ? baseFontSize - 2 : 14;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -56,8 +58,8 @@ class _FileButtonState extends State<FileButton> {
                     isSelected ? selectedFileButtonColor : Colors.transparent,
                 child: Image.asset(
                   bigIconBasePath + widget.bigIconName,
-                  width: 50,
-                  height: 50,
+                  width: 46,
+                  height: 46,
                 ),
               ),
               const SizedBox(height: 10),
@@ -71,9 +73,7 @@ class _FileButtonState extends State<FileButton> {
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize:
-                          Theme.of(context).textTheme.bodyMedium?.fontSize ??
-                          14,
+                      fontSize: labelFontSize,
                       color: isSelected ? contrastTextColor : menuTextColor,
                     ),
                   ),

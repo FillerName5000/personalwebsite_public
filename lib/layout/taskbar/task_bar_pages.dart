@@ -140,7 +140,7 @@ class _TaskBarPagesState extends State<TaskBarPages> {
           ),
         );
       } else {
-        final blogpostsNoContent = snapshot.data!;
+        final List<BlogpostNoContent> blogpostsNoContent = snapshot.data!;
         return Expanded(
           child: Row(
             children: <Widget>[

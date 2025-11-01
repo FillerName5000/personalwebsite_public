@@ -35,7 +35,12 @@ flutter:
       - asset: fonts/COUR.ttf
       - asset: fonts/COURBD.ttf
         weight: 700
+    - family: SourceCodePro
+      fonts:
+      - asset: fonts/SourceCodePro.ttf
+        weight: 600
 
   assets:
+    - fonts/
     - assets/icons/
     - assets/big_icons/

@@ -120,7 +120,7 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
         bigIconName: 'blank_file_icon.png',
         label: blogpostsWithoutContent[index],
         onPressed:
-            () => GoRouter.of(
+            ()  => GoRouter.of(
               context,
             ).go('/blogpost/${blogposts[index].title.urlEncoded()}'),
       ),

@@ -92,6 +92,7 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
           );
         } else {
           final List<FileButtonSmall> fileButtons = getJoinedFileButtonLists(
+            context,
             snapshot.data!,
           );
           return GridView.extent(
@@ -104,6 +105,7 @@ class _FileButtonGridSmallScreenState extends State<FileButtonGridSmallScreen> {
   }
 
   List<FileButtonSmall> getJoinedFileButtonLists(
+    BuildContext context,
     List<BlogpostNoContent> blogposts,
   ) {
     final List<String> blogpostsWithoutContent =

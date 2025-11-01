@@ -15,7 +15,7 @@ class EmptyScreen extends StatelessWidget {
           semanticLabel: 'Fullscreen Button',
           width: 24,
         ),
-        onPressed: () => context.go(routeHome),
+        onPressed: () async => context.push(routeHome),
       ),
     ),
   );

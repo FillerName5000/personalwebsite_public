@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:personal_website/constants/colors.dart';
+import 'package:personal_website/providers/adv_of_code_24_provider.dart';
 import 'package:personal_website/providers/api_url_provider.dart';
 import 'package:personal_website/providers/blogpost_provider.dart';
 import 'package:personal_website/providers/font_provider.dart';
@@ -10,7 +13,6 @@ import 'package:personal_website/routing/pw_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-//TODO add central reference point font size
 void main() {
   runApp(const PersonalWebsiteApp());
   SemanticsBinding.instance.ensureSemantics();
@@ -36,6 +38,13 @@ class PersonalWebsiteApp extends StatelessWidget {
       ),
       ChangeNotifierProvider<BlogpostProvider>(
         create: (BuildContext context) => BlogpostProvider(),
+      ),
+      ChangeNotifierProvider<AdvOfCode24Provider>(
+        create: (BuildContext context) {
+          final AdvOfCode24Provider provider = AdvOfCode24Provider();
+          unawaited(provider.fetchAdvOfCode24Completions(context));
+          return provider;
+        },
       ),
     ],
     child: Consumer<FontProvider>(

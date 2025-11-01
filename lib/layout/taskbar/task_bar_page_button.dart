@@ -17,8 +17,9 @@ class TaskBarNavButton extends StatelessWidget {
     child: SizedBox(
       width: taskBarNavButtonWidth,
       child: NonDepressedButton(
-        onPressed:
-            () => GoRouter.of(context).go('/blogpost/$title'.urlEncoded()),
+        onPressed: () async {
+          GoRouter.of(context).go('/blogpost/$title'.urlEncoded()); // override transition
+        },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Row(

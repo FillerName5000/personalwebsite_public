@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:personal_website/layout/file_explorer/components/file_button.dart';
 import 'package:personal_website/layout/file_explorer/components/file_button_small.dart';
 import 'package:personal_website/providers/api_url_provider.dart';
+import 'package:personal_website/routing/pw_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,8 +26,9 @@ List<Object> _fixedUrlFileButtonData = <Object>[
     "id": 4,
     "bigIconName": "advent_of_code_24.png",
     "label": "Advent Of Code 24",
-    "onPressedUrl": "https://github.com/FillerName5000/AdventOfCode2024cpp",
-  },
+    "onPressedUrl":
+        "", // hardcoded alt case, in a bigger project this would be an additional file type
+  }, // These entries are built-in to the frontend app, limited in size, and not dependent on external APIs.
 ];
 
 List<Object> _apiDependantFileButtonData = <Object>[
@@ -46,12 +49,17 @@ List<Object> _apiDependantFileButtonData = <Object>[
 List<FileButton> baseFileButtons(BuildContext context) => <FileButton>[
   ..._fixedUrlFileButtonData.map((Object data) {
     final Map<String, Object> map = data as Map<String, Object>;
+    final int id = map["id"]! as int;
     return FileButton(
-      id: map["id"]! as int,
+      id: id,
       bigIconName: map["bigIconName"]! as String,
       label: map["label"]! as String,
       onPressed:
-          () => unawaited(launchUrl(Uri.parse(map["onPressedUrl"]! as String))),
+          id == 4
+              ? () => GoRouter.of(context).push(routeAdvOfCode24)
+              : () => unawaited(
+                launchUrl(Uri.parse(map["onPressedUrl"]! as String)),
+              ),
     );
   }),
   ..._apiDependantFileButtonData.map((Object data) {
@@ -68,29 +76,33 @@ List<FileButton> baseFileButtons(BuildContext context) => <FileButton>[
   }),
 ];
 
-List<FileButtonSmall> baseFileButtonsSmall(
-  BuildContext context,
-) => <FileButtonSmall>[
-  ..._fixedUrlFileButtonData.map((Object data) {
-    final Map<String, Object> map = data as Map<String, Object>;
-    return FileButtonSmall(
-      id: map["id"]! as int,
-      bigIconName: map["bigIconName"]! as String,
-      label: map["label"]! as String,
-      onPressed:
-          () => unawaited(launchUrl(Uri.parse(map["onPressedUrl"]! as String))),
-    );
-  }),
-  ..._apiDependantFileButtonData.map((Object data) {
-    final Map<String, Object> map = data as Map<String, Object>;
-    final String fullUrl =
-        Provider.of<ApiTypeProvider>(context, listen: false).fullBaseUrl +
-        (map["onPressedUrl"]! as String);
-    return FileButtonSmall(
-      id: map["id"]! as int,
-      bigIconName: map["bigIconName"]! as String,
-      label: map["label"]! as String,
-      onPressed: () => unawaited(launchUrl(Uri.parse(fullUrl))),
-    );
-  }),
-];
+List<FileButtonSmall> baseFileButtonsSmall(BuildContext context) =>
+    <FileButtonSmall>[
+      ..._fixedUrlFileButtonData.map((Object data) {
+        final Map<String, Object> map = data as Map<String, Object>;
+        final int id = map["id"]! as int;
+        return FileButtonSmall(
+          id: id,
+          bigIconName: map["bigIconName"]! as String,
+          label: map["label"]! as String,
+          onPressed:
+              id == 4
+                  ? () => GoRouter.of(context).push(routeAdvOfCode24)
+                  : () => unawaited(
+                    launchUrl(Uri.parse(map["onPressedUrl"]! as String)),
+                  ),
+        );
+      }),
+      ..._apiDependantFileButtonData.map((Object data) {
+        final Map<String, Object> map = data as Map<String, Object>;
+        final String fullUrl =
+            Provider.of<ApiTypeProvider>(context, listen: false).fullBaseUrl +
+            (map["onPressedUrl"]! as String);
+        return FileButtonSmall(
+          id: map["id"]! as int,
+          bigIconName: map["bigIconName"]! as String,
+          label: map["label"]! as String,
+          onPressed: () => unawaited(launchUrl(Uri.parse(fullUrl))),
+        );
+      }),
+    ];
