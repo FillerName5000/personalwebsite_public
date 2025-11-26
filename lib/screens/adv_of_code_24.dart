@@ -12,11 +12,11 @@ const String advOfCode24TooltipMessage =
     'Advent of Code is an annual coding event. \n'
     'Each day of Advent unlocks two programming challenges, part two unlocking after completing part one. \n'
     'The color indicates whether a part has been completed, it is not yet completed, or I have not started it. \n'
-    'These challenges are solved using C++, with the per-part solutions linked here.';
+    'These challenges are solved using C++, with the per-part solutions linked here. ';
 
 const String onHoldTooltipMessage =
     'After being unable to complete a part within a certain time limit, it has been put on hold. \n'
-    'I will return to it later. ';
+    'This is an organic way to first work through the easier problems, then do the more difficult ones (to me). ';
 
 const String baseFileUrl =
     'https://github.com/FillerName5000/AdventOfCode2024cpp/tree/main/';

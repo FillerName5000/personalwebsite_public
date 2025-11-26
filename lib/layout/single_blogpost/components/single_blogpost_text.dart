@@ -27,7 +27,10 @@ class _SingleBlogpostTextState extends State<SingleBlogpostText> {
     final BlogpostProvider blogpostProvider = Provider.of<BlogpostProvider>(
       context,
     );
-    _blogpostFuture = blogpostProvider.fetchBlogpostByTitle(context, widget.title);
+    _blogpostFuture = blogpostProvider.fetchBlogpostByTitle(
+      context,
+      widget.title,
+    );
 
     return FutureBuilder<Blogpost?>(
       future: _blogpostFuture,
@@ -37,24 +40,26 @@ class _SingleBlogpostTextState extends State<SingleBlogpostText> {
         } else if (!snapshot.hasData || snapshot.hasError) {
           return Center(child: Text('"${widget.title}" could not be found.'));
         } else {
-          return Padding(
-            padding: const EdgeInsets.all(6),
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(minWidth: double.infinity),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      snapshot.data!.title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+          return SelectionArea(
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: double.infinity),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        snapshot.data!.title,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(snapshot.data!.content),
-                  ],
+                      const SizedBox(height: 10),
+                      Text(snapshot.data!.content),
+                    ],
+                  ),
                 ),
               ),
             ),

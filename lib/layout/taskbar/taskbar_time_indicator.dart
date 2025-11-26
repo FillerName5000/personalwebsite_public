@@ -21,31 +21,40 @@ class _TaskBarTimeIndicatorState extends State<TaskBarTimeIndicator> {
         padding: const EdgeInsets.only(left: 2, right: 8),
         child: Row(
           children: <Widget>[
-            const Image(
-              image: AssetImage('assets/icons/flutter_logo.png'),
-              semanticLabel: 'Flutter logo',
-              width: 20,
-              height: 20,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.none,
+            const Tooltip(
+              message: 'Flutter',
+              child: Image(
+                image: AssetImage('assets/icons/flutter_logo.png'),
+                semanticLabel: 'Flutter logo',
+                width: 20,
+                height: 20,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.none,
+              ),
             ),
             const SizedBox(width: 8),
-            const Image(
-              image: AssetImage('assets/icons/csharp_logo.png'),
-              semanticLabel: 'C Sharp logo',
-              width: 20,
-              height: 20,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.none,
+            const Tooltip(
+              message: 'C#',
+              child: Image(
+                image: AssetImage('assets/icons/csharp_logo.png'),
+                semanticLabel: 'C Sharp logo',
+                width: 20,
+                height: 20,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.none,
+              ),
             ),
             const SizedBox(width: 8),
-            const Image(
-              image: AssetImage('assets/icons/java_logo.png'),
-              semanticLabel: 'Java logo',
-              width: 20,
-              height: 20,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.none,
+            const Tooltip(
+              message: 'Java',
+              child: Image(
+                image: AssetImage('assets/icons/java_logo.png'),
+                semanticLabel: 'Java logo',
+                width: 20,
+                height: 20,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.none,
+              ),
             ),
             const SizedBox(width: 8),
             Consumer<SecondLoopingProvider>(

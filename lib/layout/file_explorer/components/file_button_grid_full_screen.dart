@@ -95,9 +95,12 @@ class _FileButtonGridFullScreenState extends State<FileButtonGridFullScreen> {
             context,
             snapshot.data!,
           );
-          return GridView.extent(
-            maxCrossAxisExtent: 240,
-            children: fileButtons,
+          return Padding(
+            padding: const EdgeInsets.only(top: 2),
+            child: GridView.extent(
+              maxCrossAxisExtent: 240,
+              children: fileButtons,
+            ),
           );
         }
       },

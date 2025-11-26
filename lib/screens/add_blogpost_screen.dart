@@ -79,7 +79,7 @@ class _AddBlogpostScreenState extends State<AddBlogpostScreen> {
             ),
             TextFormField(
               controller: _credentialController,
-              decoration: const InputDecoration(labelText: 'Credential'),
+              decoration: const InputDecoration(labelText: "Credential. this is a random string, regenerated on a regular basis including when I read it. Don't bother spamming it."),
               validator: (String? value) =>
                   value == null || value.isEmpty ? 'Enter a credential' : null,
             ),
